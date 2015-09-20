@@ -1,9 +1,13 @@
 import android.graphics.Bitmap;
+import android.util.JsonReader;
 
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -28,7 +32,7 @@ public class ImgurPassThrough {
         }
         catch(Exception ex)
         {
-            throw new RuntimeException("Imgur final URL is wrong in ImgurPassThrough");
+            return "ERROR";
         }
 
         HttpURLConnection conn;
@@ -38,7 +42,7 @@ public class ImgurPassThrough {
         }
         catch(Exception ex)
         {
-            throw new RuntimeException("HttpURLConnection Error in ImgurPassThrough");
+            return "ERROR";
         }
 
         conn.setRequestProperty("Authorization", "Client-ID " + clientid);
@@ -51,10 +55,40 @@ public class ImgurPassThrough {
         }
         catch(Exception ex)
         {
-            throw new RuntimeException("Unable to assemble JSON content in ImgurPassThrough");
+            return "ERROR";
+        }
+
+        OutputStreamWriter osw;
+        try {
+            osw = new OutputStreamWriter(conn.getOutputStream());
+            osw.write(content.toString());
+            osw.flush();
+            osw.close();
+        }
+        catch(Exception ex)
+        {
+            return "ERROR";
+        }
+
+        BufferedReader reader;
+        try {
+            reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            String responsestr = "";
+            String line = "";
+            while((line = reader.readLine()) != null)
+            {
+                responsestr = responsestr + line;
+            }
+            reader.close();
+            JSONObject response = new JSONObject(responsestr);
+            return "http://i.imgur.com/" + response.getString("data") + ".jpg";
+
+        }
+        catch(Exception ex)
+        {
+            return "ERROR";
         }
 
 
-        return "";
     }
 }
