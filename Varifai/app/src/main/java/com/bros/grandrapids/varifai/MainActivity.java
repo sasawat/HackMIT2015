@@ -1,6 +1,8 @@
 package com.bros.grandrapids.varifai;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -47,5 +49,11 @@ public class MainActivity extends AppCompatActivity {
     {
         Intent intent = new Intent(this, ConfirmActivity.class);
         startActivity(intent);
+    }
+
+    public String testImgurUpload()
+    {
+        Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.imgurUptest);
+        return ImgurPassThrough.upload(bm);
     }
 }
