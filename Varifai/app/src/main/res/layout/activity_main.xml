@@ -5,32 +5,40 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
+    <Button
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView" />
+        android:text="Hot!"
+        android:id="@+id/buttonTrain"
+        android:onClick="launchTrainingActivity"
+        android:layout_marginRight="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_alignTop="@+id/button"
+        android:layout_alignRight="@+id/buttonConfirm"
+        android:layout_alignEnd="@+id/buttonConfirm" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Train"
-        android:id="@+id/buttonTrain"
-        android:layout_below="@+id/textView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:text="Predict!"
+        android:id="@+id/buttonConfirm"
+        android:onClick="launchConfirmActivity"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:onClick="launchTrainingActivity" />
+        android:layout_marginBottom="29dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Varifai"
-        android:id="@+id/buttonConfirm"
-        android:layout_below="@+id/buttonTrain"
+        android:text="Not!"
+        android:id="@+id/button"
+        android:layout_above="@+id/buttonConfirm"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/buttonTrain"
-        android:layout_alignEnd="@+id/buttonTrain"
-        android:onClick="launchConfirmActivity" />
+        android:layout_marginLeft="31dp"
+        android:layout_marginStart="31dp" />
 
 </RelativeLayout>
