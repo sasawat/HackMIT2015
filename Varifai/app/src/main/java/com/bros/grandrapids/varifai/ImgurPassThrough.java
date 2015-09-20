@@ -3,6 +3,7 @@ package com.bros.grandrapids.varifai;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.os.StrictMode;
 import android.util.JsonReader;
 
 
@@ -10,6 +11,7 @@ import android.util.JsonReader;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -38,7 +40,7 @@ public class ImgurPassThrough {
         }
         catch(Exception ex)
         {
-            return "ERROR";
+            return "ERROR in new URL";
         }
 
         HttpURLConnection conn;
@@ -48,10 +50,11 @@ public class ImgurPassThrough {
         }
         catch(Exception ex)
         {
-            return "ERROR";
+            return "ERROR in set request message";
         }
 
         conn.setRequestProperty("Authorization", "Client-ID " + clientid);
+
 
         JSONObject content = new JSONObject();
         try {
@@ -61,23 +64,36 @@ public class ImgurPassThrough {
         }
         catch(Exception ex)
         {
-            return "ERROR";
+            return "ERROR in content";
         }
 
-        OutputStreamWriter osw;
+        BufferedWriter osw;
         try {
-            osw = new OutputStreamWriter(conn.getOutputStream());
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+            StrictMode.setThreadPolicy(policy);
+            conn.setDoOutput(true);
+            conn.setDoInput(true);
+            conn.setChunkedStreamingMode(0);
+
+            osw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
             osw.write(content.toString());
             osw.flush();
             osw.close();
+
+
+
         }
         catch(Exception ex)
         {
-            return "ERROR";
+            ex.printStackTrace();
+            return "ERROR in writing content ";
         }
 
         BufferedReader reader;
         try {
+
+
             reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             String responsestr = "";
             String line = "";
@@ -92,7 +108,9 @@ public class ImgurPassThrough {
         }
         catch(Exception ex)
         {
-            return "ERROR";
+            ex.printStackTrace();
+            try{
+            return "ERROR in response reading" + conn.getResponseCode();}catch(Exception sex) {return "ff";}
         }
 
 

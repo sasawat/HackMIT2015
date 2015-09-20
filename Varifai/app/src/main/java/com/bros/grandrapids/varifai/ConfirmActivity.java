@@ -111,6 +111,7 @@ public class ConfirmActivity extends Activity {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+                    Log.w("Imgur Upload", ImgurPassThrough.upload(bitmap));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -126,6 +127,7 @@ public class ConfirmActivity extends Activity {
                 Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
                 Log.w("path of image", picturePath+"");
                 viewImage.setImageBitmap(thumbnail);
+                Log.w("Imgur Upload", ImgurPassThrough.upload(thumbnail));
             }
         }
     }
