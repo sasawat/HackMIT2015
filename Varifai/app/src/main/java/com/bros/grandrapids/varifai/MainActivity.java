@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
     public String testImgurUpload()
     {
-        Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.imgurUptest);
+        Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.imguruptest);
         return ImgurPassThrough.upload(bm);
     }
 }
