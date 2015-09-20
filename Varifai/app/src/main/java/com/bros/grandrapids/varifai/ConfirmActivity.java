@@ -30,15 +30,7 @@ public class ConfirmActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        b=(Button)findViewById(R.id.btnSelectPhoto);
-        viewImage=(ImageView)findViewById(R.id.viewImage);
-        b.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectImage();
-            }
-        });
+        setContentView(R.layout.activity_confirm);
     }
 
     @Override
@@ -48,7 +40,7 @@ public class ConfirmActivity extends Activity {
         return true;
     }
 
-    private void selectImage() {
+    public void selectImage(View view) {
 
         final CharSequence[] options = { "Take Photo", "Choose from Gallery","Cancel" };
 
@@ -131,7 +123,7 @@ public class ConfirmActivity extends Activity {
                 String picturePath = c.getString(columnIndex);
                 c.close();
                 Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
-                Log.w("path of image from gallery......******************.........", picturePath+"");
+                Log.w("path of image", picturePath+"");
                 viewImage.setImageBitmap(thumbnail);
             }
         }

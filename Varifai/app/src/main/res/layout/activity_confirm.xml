@@ -16,7 +16,8 @@
             android:id="@+id/btnSelectPhoto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Select Photo" />
+            android:text="Select Photo"
+            android:onClick="selectImage" />
 
     </LinearLayout>
 
